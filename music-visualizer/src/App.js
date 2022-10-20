@@ -9,9 +9,7 @@ function App() {
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <ReactP5Wrapper sketch={CircleContainer}/>
-        <div class = "circle"></div>
-        <div class = "circle-hider"></div>
-        <div class="range"></div>
+        <div className = "range"></div>
       </header>
     </div>
   );

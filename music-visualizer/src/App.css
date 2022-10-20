@@ -5,6 +5,7 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+  z-index: -100;
 }
 
 .App-logo {
@@ -29,6 +30,7 @@
   color: #DDA77B;
   width: 80%;
   max-width: 800px;
+  z-index: 100;
 }
 
 .App-link {
@@ -43,13 +45,34 @@
     transform: rotate(360deg);
   }
 }
+
+.circle-container{
+  width: 410px;
+  height: 410px;
+  position: relative;
+  display: block;
+}
+
 .circle{
   width: 400px;
   height: 400px;
   background-color: #DDA77B;
   border-radius: 50%;
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 5px;
 }
-
+.circle-hider{
+  width: 410px;
+  height: 410px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 1;
+  position: absolute;
+  /* top: -405px; */
+}
 
 
 

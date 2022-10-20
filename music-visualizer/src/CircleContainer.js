@@ -8,7 +8,7 @@ function CircleContainer(p){
     };
 
     const drawPoint = (p, angle) => {
-        var HEIGHT = 180;
+        // var HEIGHT = 180;
         let a,b;
         [a,b] = angleToPoint(angle, HEIGHT);
         // console.log(a,b)
@@ -23,14 +23,15 @@ function CircleContainer(p){
     var CANVAS_SIZE = 600;
     var NUM = 16;
     var ANGLE = p.TWO_PI / NUM;
-    var HEIGHT = 180;
+    var HEIGHT = 160;
+    var MAX_SCALE = 1.7;
     var ANGLE_SCALE = 0.75;
 
     var randArr = []
     var tgtArr = []
     for (let i = 0; i<NUM; i++){
-        randArr.push(p.random(1,1.6));
-        tgtArr.push(p.random(1,1.6));
+        randArr.push(p.random(1,MAX_SCALE));
+        tgtArr.push(p.random(1,MAX_SCALE));
     }
     console.log(randArr);
     // let randScale = p.random(1, 1.6);
@@ -76,7 +77,7 @@ function CircleContainer(p){
                     randArr[ind] -= 0.0004;
                 }
                 if (-0.02 < (randArr[ind] - tgtArr[ind]) && (randArr[ind] - tgtArr[ind]) < 0.02){
-                    tgtArr[ind] = p.random(1, 1.6);
+                    tgtArr[ind] = p.random(1, MAX_SCALE);
                 }
             })
             // randArr = n;

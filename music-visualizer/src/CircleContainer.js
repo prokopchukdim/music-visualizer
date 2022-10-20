@@ -11,7 +11,7 @@ function CircleContainer(p){
         var HEIGHT = 180;
         let a,b;
         [a,b] = angleToPoint(angle, HEIGHT);
-        console.log(a,b)
+        // console.log(a,b)
         p.vertex(a,b);
     }
 
@@ -19,13 +19,29 @@ function CircleContainer(p){
         p.scale(scale, scale);
     }
     
+    
+    var CANVAS_SIZE = 600;
+    var NUM = 16;
+    var ANGLE = p.TWO_PI / NUM;
+    var HEIGHT = 180;
+    var ANGLE_SCALE = 0.75;
+
+    var randArr = []
+    var tgtArr = []
+    for (let i = 0; i<NUM; i++){
+        randArr.push(p.random(1,1.6));
+        tgtArr.push(p.random(1,1.6));
+    }
+    console.log(randArr);
+    // let randScale = p.random(1, 1.6);
+
     p.setup = () => {
-        var CANVAS_SIZE = 600;
+        
         p.createCanvas(CANVAS_SIZE,CANVAS_SIZE); 
-        var NUM = 16;
-        var ANGLE = p.TWO_PI / NUM;
-        var HEIGHT = 180;
-        var ANGLE_SCALE = 0.75;
+    };
+
+
+    p.draw = () => {
 
         let c = p.color(221, 167, 123);
         p.fill(c);
@@ -35,14 +51,14 @@ function CircleContainer(p){
         p.background(c);
 
         p.translate(CANVAS_SIZE/2, CANVAS_SIZE/2);
-        
+
         //draw slices;
 
         for (let i = 0; i < NUM; i++){
             p.rotate(p.TWO_PI / NUM * i)
             
-            let randScale = p.random(1, 1.6);
-            scale(p, randScale);
+            
+            scale(p, randArr[i]);
             p.beginShape();
             p.vertex(0, 0);
             p.vertex(0, HEIGHT);
@@ -51,7 +67,19 @@ function CircleContainer(p){
             drawPoint(p, ANGLE * 3 / 4 * ANGLE_SCALE);
             drawPoint(p, ANGLE * ANGLE_SCALE);
             p.endShape(p.CLOSE);
-            scale(p, 1/randScale);
+            scale(p, 1/randArr[i]);
+            randArr.forEach( (val, ind) => {
+                if (randArr[ind] < tgtArr[ind]){
+                    randArr[ind] += 0.0004;
+                }
+                else if (randArr[ind] >= tgtArr[ind]){
+                    randArr[ind] -= 0.0004;
+                }
+                if (-0.02 < (randArr[ind] - tgtArr[ind]) && (randArr[ind] - tgtArr[ind]) < 0.02){
+                    tgtArr[ind] = p.random(1, 1.6);
+                }
+            })
+            // randArr = n;
         }
         
         //Draw circles;
@@ -60,10 +88,6 @@ function CircleContainer(p){
         c = p.color(221, 167, 123);
         p.fill(c);
         p.ellipse(0, 0, 300, 300);
-    };
-    p.draw = () => {
-        
-
 
     };
 }

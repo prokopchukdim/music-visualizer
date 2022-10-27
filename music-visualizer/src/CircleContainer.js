@@ -22,7 +22,7 @@ function CircleContainer(p){
     
     
     var CANVAS_SIZE = 600;
-    var NUM = 32;
+    var NUM = 256;
     var ANGLE = p.TWO_PI / NUM;
     var HEIGHT = 160;
     var MAX_SCALE = 1.7;
@@ -61,7 +61,7 @@ function CircleContainer(p){
             const audioSourceNode = audioContext.createMediaElementSource(audio);
         
             analyserNode = audioContext.createAnalyser();
-            analyserNode.fftSize = 64;
+            analyserNode.fftSize = NUM * 2;
             const bufferLength = analyserNode.frequencyBinCount;
             dataArr = new Float32Array(bufferLength);
         
@@ -72,6 +72,11 @@ function CircleContainer(p){
         
         if (!audio.paused){
             audio.pause();
+            return;
+        }
+        if (audio.paused){
+            audio.play();
+            return;
         }
 
         if (played === false){
@@ -91,6 +96,9 @@ function CircleContainer(p){
         let canvas = p.createCanvas(CANVAS_SIZE,CANVAS_SIZE);         
     };
 
+    const BASE = Math.E;
+    const EXP_CONST = (MIN_SCALE * (BASE ** MAX_SCALE) - MAX_SCALE * (BASE ** MIN_SCALE))/(BASE ** MAX_SCALE - BASE ** MIN_SCALE);
+    const EXP_SCALE = (MIN_SCALE - EXP_CONST)/(BASE ** MIN_SCALE);
 
     p.draw = () => {
         let c = p.color(221, 167, 123);
@@ -121,7 +129,7 @@ function CircleContainer(p){
             p.endShape(p.CLOSE);
             scale(p, 1/scaleArr[i]);
         }
-        if (analyserNode){
+        if (audio && !audio.paused){
             analyserNode.getFloatFrequencyData(dataArr);
 
             let max = Math.max(...dataArr);
@@ -129,7 +137,13 @@ function CircleContainer(p){
             
             // console.log(dataArr);
             dataArr.forEach( (val, ind) => {
-                let dif = scaleArr[ind] - ((val - min) * (MAX_SCALE - MIN_SCALE) / (max - min) + MIN_SCALE);
+                
+
+                let tgt_unscaled = ((val - min) * (MAX_SCALE - MIN_SCALE) / (max - min) + MIN_SCALE);
+                let tgt = EXP_SCALE * BASE ** tgt_unscaled + EXP_CONST;
+                console.log(tgt);
+
+                let dif = scaleArr[ind] - tgt;
                 if (dif < 0){
                     scaleArr[ind] += Math.max(0, Math.min(-dif, 0.01));
                 }

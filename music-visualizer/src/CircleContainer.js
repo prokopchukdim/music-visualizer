@@ -28,6 +28,7 @@ function CircleContainer(p){
     var MAX_SCALE = 1.7;
     var MIN_SCALE = 1.1;
     var ANGLE_SCALE = 0.75;
+    var soundFileURL = require('./test.mp3');
 
     var scaleArr = [];
     for (let i = 0; i<NUM; i++){
@@ -43,12 +44,13 @@ function CircleContainer(p){
 
     var audio = null;
 
-    const clickHandler = () => {
-        if (!audio){
-            const audioContext = new AudioContext();
+    const mountAudio = () => {
+        if (audio) {
+            audio.pause();
+        }
+        else{
             audio = new Audio();
-            audio.src = require('./test.mp3');
-            // audio.crossOrigin = "anonymous";
+            const audioContext = new AudioContext();
             const audioSourceNode = audioContext.createMediaElementSource(audio);
         
             analyserNode = audioContext.createAnalyser();
@@ -59,7 +61,15 @@ function CircleContainer(p){
             audioSourceNode.connect(analyserNode);
             analyserNode.connect(audioContext.destination);
         }
+        audio.src = soundFileURL;
+    }
+
+    const clickHandler = () => {
+        if (!audio){
+            mountAudio();
+        }
         
+        console.log(soundFileURL);
         
         if (!audio.paused){
             audio.pause();
@@ -75,12 +85,17 @@ function CircleContainer(p){
         }
         
         setPlayed();
-        
-
     }
 
     
     document.addEventListener("click", clickHandler);
+
+    p.updateWithProps = (props) => {
+        if (props.fileURL) {
+            soundFileURL = props.fileURL;
+            mountAudio();
+        }
+    }
 
 
     p.setup = () => {
@@ -176,6 +191,8 @@ function CircleContainer(p){
         p.ellipse(0, 0, 300, 300);
 
     };
+
+    
 }
 
 export default CircleContainer;

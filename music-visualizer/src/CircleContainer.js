@@ -29,15 +29,6 @@ function CircleContainer(p){
     var MIN_SCALE = 1.1;
     var ANGLE_SCALE = 0.75;
 
-    // var randArr = []
-    // var tgtArr = []
-    // for (let i = 0; i<NUM; i++){
-    //     randArr.push(p.random(1,MAX_SCALE));
-    //     tgtArr.push(p.random(1,MAX_SCALE));
-    // }
-    // console.log(randArr);
-    // let randScale = p.random(1, 1.6);
-
     var scaleArr = [];
     for (let i = 0; i<NUM; i++){
         scaleArr.push(MIN_SCALE);

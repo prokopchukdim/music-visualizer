@@ -62,6 +62,11 @@
   z-index: 2;
   top: 25%;
   left: 25%;
+  transition: all 0.3s;
+}
+
+.circle-hover{
+  background-color: #a37e60;
 }
 
 .circle-hider{
@@ -74,6 +79,12 @@
   position: absolute;
   display: none;
   /* top: -405px; */
+}
+
+.upload-icon{
+  color: aliceblue;
+  position: relative;
+  top: 95px;
 }
 
 .wrapper{

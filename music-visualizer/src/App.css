@@ -54,16 +54,16 @@
 }
 
 .circle{
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   background-color: #DDA77B;
   border-radius: 50%;
   position: absolute;
   z-index: 2;
-  top: 5px;
-  left: 5px;
-  display: none;
+  top: 25%;
+  left: 25%;
 }
+
 .circle-hider{
   width: 410px;
   height: 410px;
@@ -74,6 +74,10 @@
   position: absolute;
   display: none;
   /* top: -405px; */
+}
+
+.wrapper{
+  position: relative;
 }
 
 .p5Canvas{

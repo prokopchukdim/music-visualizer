@@ -132,7 +132,7 @@ function CircleContainer(p){
 
                 let tgt_unscaled = ((val - min) * (MAX_SCALE - MIN_SCALE) / (max - min) + MIN_SCALE);
                 let tgt = EXP_SCALE * BASE ** tgt_unscaled + EXP_CONST;
-                console.log(tgt);
+                // console.log(tgt);
 
                 let dif = scaleArr[ind] - tgt;
                 if (dif < 0){

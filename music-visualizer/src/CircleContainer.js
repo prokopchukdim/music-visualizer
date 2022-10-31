@@ -1,5 +1,3 @@
-import test from "./test.mp3"
-
 function CircleContainer(p){
     const angleToPoint = (angle, height) => {
         var x = (height * p.tan(angle)) / p.sqrt(1 + (p.tan(angle) * p.tan(angle)));
@@ -64,6 +62,8 @@ function CircleContainer(p){
         audio.src = soundFileURL;
     }
 
+    var toPlay = false;
+
     const clickHandler = () => {
         if (!audio){
             mountAudio();
@@ -88,18 +88,22 @@ function CircleContainer(p){
     }
 
     
-    document.addEventListener("click", clickHandler);
+    // document.addEventListener("click", clickHandler);
 
     p.updateWithProps = (props) => {
         if (props.fileURL) {
             soundFileURL = props.fileURL;
             mountAudio();
         }
+        if (toPlay !== props.toPlay){
+            clickHandler();
+            toPlay = props.toPlay;
+        }
     }
 
 
     p.setup = () => {
-        let canvas = p.createCanvas(CANVAS_SIZE,CANVAS_SIZE);         
+        p.createCanvas(CANVAS_SIZE,CANVAS_SIZE);         
     };
 
     const BASE = Math.E;

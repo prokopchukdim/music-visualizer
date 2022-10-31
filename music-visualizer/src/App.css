@@ -82,7 +82,8 @@
 }
 
 .upload-icon{
-  color: aliceblue;
+  /* color: aliceblue; */
+  color:#37123C;
   position: relative;
   top: 95px;
 }

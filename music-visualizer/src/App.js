@@ -30,7 +30,10 @@ function App() {
           <FileField onUpload={onUpload}/>
           <ReactP5Wrapper sketch={CircleContainer} fileURL={soundFileURL} toPlay = {toPlay}/>  
         </div>
-        <div className = "range"></div>
+        <div className = "slider-container">
+          <input type = "range" class = "slider"/>
+        </div>
+        {/* <div className='range'></div> */}
         <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay}></PlayController>
       </header>
     </div>

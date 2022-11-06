@@ -1,3 +1,5 @@
+import { popoverClasses } from '@mui/material';
+
 function CircleContainer(p){
     const angleToPoint = (angle, height) => {
         var x = (height * p.tan(angle)) / p.sqrt(1 + (p.tan(angle) * p.tan(angle)));
@@ -26,7 +28,7 @@ function CircleContainer(p){
     var MAX_SCALE = 1.7;
     var MIN_SCALE = 1.1;
     var ANGLE_SCALE = 0.75;
-    var soundFileURL = require('./test.mp3');
+    // var soundFileURL = require('./test.mp3');
 
     var scaleArr = [];
     for (let i = 0; i<NUM; i++){
@@ -34,70 +36,29 @@ function CircleContainer(p){
     }
     var dataArr = [];
     var analyserNode = null;
-    var played = false;
+    // var played = false;
 
-    const setPlayed = () => {
-        played = true;
-    }
+    // const setPlayed = () => {
+    //     played = true;
+    // }
 
-    var audio = null;
-
-    const mountAudio = () => {
-        if (audio) {
-            audio.pause();
-        }
-        else{
-            audio = new Audio();
-            const audioContext = new AudioContext();
-            const audioSourceNode = audioContext.createMediaElementSource(audio);
-        
-            analyserNode = audioContext.createAnalyser();
-            analyserNode.fftSize = NUM * 2;
-            const bufferLength = analyserNode.frequencyBinCount;
-            dataArr = new Float32Array(bufferLength);
-        
-            audioSourceNode.connect(analyserNode);
-            analyserNode.connect(audioContext.destination);
-        }
-        audio.src = soundFileURL;
-    }
-
+    // var audio = null;
     var toPlay = false;
-
-    const clickHandler = () => {
-        if (!audio){
-            mountAudio();
-        }
-        
-        console.log(soundFileURL);
-        
-        if (!audio.paused){
-            audio.pause();
-            return;
-        }
-        if (audio.paused){
-            audio.play();
-            return;
-        }
-
-        if (played === false){
-            audio.play();
-        }
-        
-        setPlayed();
-    }
-
     
-    // document.addEventListener("click", clickHandler);
+
 
     p.updateWithProps = (props) => {
-        if (props.fileURL) {
-            soundFileURL = props.fileURL;
-            mountAudio();
-        }
         if (toPlay !== props.toPlay){
-            clickHandler();
+            // clickHandler();
             toPlay = props.toPlay;
+        }
+
+        if (props.aNode){
+            analyserNode = props.aNode;
+        }
+
+        if (props.NUM) {
+            NUM = props.NUM;
         }
     }
 
@@ -123,6 +84,11 @@ function CircleContainer(p){
 
         //draw slices;
 
+        if (analyserNode != null){
+            const bufferLength = analyserNode.frequencyBinCount;
+            dataArr = new Float32Array(bufferLength);
+        }
+
         for (let i = 0; i < NUM; i++){
             // p.rotate(p.TWO_PI / NUM * i);
             p.rotate(p.TWO_PI / NUM);
@@ -139,7 +105,8 @@ function CircleContainer(p){
             p.endShape(p.CLOSE);
             scale(p, 1/scaleArr[i]);
         }
-        if (audio && !audio.paused){
+        if (analyserNode != null && toPlay){
+
             analyserNode.getFloatFrequencyData(dataArr);
 
             let max = Math.max(...dataArr);

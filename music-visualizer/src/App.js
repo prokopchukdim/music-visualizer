@@ -14,6 +14,7 @@ function App() {
   const [audio] = React.useState(new Audio());
   const [analyserNode, setAnalyserNode] = React.useState(null);
   const [NUM] = React.useState(256);
+  const [timeVal, setTimeVal] = React.useState(audio.currentTime);
 
   const onUpload = (files) => {
     console.log("A file was uploaded");
@@ -47,6 +48,15 @@ function App() {
     audio.src = soundFileURL;
   }, [audio, soundFileURL]);
 
+  audio.addEventListener('timeupdate', (e) => {
+    setTimeVal(audio.currentTime);
+  });
+
+  const changeTime = (newTime) => {
+    audio.currentTime = newTime;
+    setTimeVal(newTime);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -56,7 +66,7 @@ function App() {
           <ReactP5Wrapper sketch={CircleContainer} toPlay = {toPlay} aNode={analyserNode} NUM = {NUM}/>  
         </div>
         <div className = "slider-container">
-          <input type = "range" className = "slider"/>
+          <input type = "range" className = "slider" min="0" max={ isNaN(audio.duration) ? 0 : audio.duration * 1000} value = {timeVal * 1000} onChange={(e) => changeTime(e.target.value / 1000)}/>
         </div>
         {/* <div className='range'></div> */}
         <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay}></PlayController>

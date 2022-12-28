@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -15,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
@@ -78,8 +81,20 @@ public class FileSystemStorageService implements StorageService {
 	public void init() {
 		try {
 			Files.createDirectory(rootLocation);
+			log.info("Initialized directory at {}", rootLocation);
+
 		} catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
+		}
+	}
+
+	@Override
+	public void delete(String filename) {
+		try {
+			Path file = load(filename);
+			FileSystemUtils.deleteRecursively(file);
+		} catch (Exception e) {
+			throw new StorageException("Could not delete file " + filename, e);
 		}
 	}
 }

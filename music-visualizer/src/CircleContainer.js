@@ -20,7 +20,6 @@ function CircleContainer(p){
         p.scale(scale, scale);
     }
     
-    
     var CANVAS_SIZE = 600;
     var NUM = 256;
     var ANGLE = p.TWO_PI / NUM;
@@ -28,6 +27,16 @@ function CircleContainer(p){
     var MAX_SCALE = 1.7;
     var MIN_SCALE = 1.1;
     var ANGLE_SCALE = 0.75;
+    var CIRCLE_WIDTH = 300;
+    var CIRCLE_GAP = 20;
+
+    if (p.windowWidth <= 600){
+        CANVAS_SIZE = 300;
+        CIRCLE_WIDTH = 150;
+        CIRCLE_GAP = 10;
+        HEIGHT = 80;
+    }
+
     // var soundFileURL = require('./test.mp3');
 
     var scaleArr = [];
@@ -156,11 +165,33 @@ function CircleContainer(p){
         
         //Draw circles;
         p.fill(c);
-        p.ellipse(0, 0, 320, 320);
+        p.ellipse(0, 0, CIRCLE_WIDTH + CIRCLE_GAP, CIRCLE_WIDTH + CIRCLE_GAP);
         c = p.color(221, 167, 123);
         p.fill(c);
-        p.ellipse(0, 0, 300, 300);
+        p.ellipse(0, 0, CIRCLE_WIDTH, CIRCLE_WIDTH);
 
+    };
+
+    p.windowResized = () => {
+        if (p.windowWidth <= 600){
+            CANVAS_SIZE = 300;
+            CIRCLE_WIDTH = 150;
+            CIRCLE_GAP = 10;
+            HEIGHT = 80;
+            p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE)
+        }
+        else{
+            CANVAS_SIZE = 600;
+            NUM = 256;
+            ANGLE = p.TWO_PI / NUM;
+            HEIGHT = 160;
+            MAX_SCALE = 1.7;
+            MIN_SCALE = 1.1;
+            ANGLE_SCALE = 0.75;
+            CIRCLE_WIDTH = 300;
+            CIRCLE_GAP = 20;
+            p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE)
+        }
     };
 
     

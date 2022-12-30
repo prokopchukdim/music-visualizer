@@ -15,7 +15,7 @@ export default function SearchMenu({searchOpen, iconSize}){
                 <p>{songNum} available songs:</p>
                 <div className='song-container'>
                     {songNames.map( (song) => {
-                        return <SongItem name={song}></SongItem>;
+                        return <SongItem key={song} name={song}></SongItem>;
                     })}
                 </div>
             </div>

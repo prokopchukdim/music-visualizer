@@ -1,5 +1,3 @@
-import { popoverClasses } from '@mui/material';
-
 function CircleContainer(p){
     const angleToPoint = (angle, height) => {
         var x = (height * p.tan(angle)) / p.sqrt(1 + (p.tan(angle) * p.tan(angle)));

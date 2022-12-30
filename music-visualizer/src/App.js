@@ -4,6 +4,8 @@ import { ReactP5Wrapper } from 'react-p5-wrapper';
 import FileField from './FileField';
 import PlayController from './PlayController';
 import React, { useEffect } from 'react';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import SearchMenu from './SearchMenu';
 
 
 
@@ -15,6 +17,17 @@ function App() {
   const [analyserNode, setAnalyserNode] = React.useState(null);
   const [NUM] = React.useState(256);
   const [timeVal, setTimeVal] = React.useState(audio.currentTime);
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [searchIconSize, setsearchIconSize] = React.useState(window.innerWidth <= 600 ? 30 : 45);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 600) {
+      setsearchIconSize(30);
+    }
+    else{
+      setsearchIconSize(45);
+    }
+}
 
   const onUpload = (files) => {
     console.log("A file was uploaded");
@@ -48,6 +61,13 @@ function App() {
     audio.src = soundFileURL;
   }, [audio, soundFileURL]);
 
+  useEffect( () => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
   audio.addEventListener('timeupdate', (e) => {
     setTimeVal(audio.currentTime);
   });
@@ -57,10 +77,17 @@ function App() {
     setTimeVal(newTime);
   }
 
+  const handleSearchClick = () => {
+    setSearchOpen(!searchOpen);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+      <div className='search-bar'>
+          <ManageSearchIcon className = 'search-menu-icon' onClick = {handleSearchClick} sx = {{fontSize:searchIconSize}} style = {{color: searchOpen ? '#37123C' : '#DDA77B', transition: 'all 0.3s ease-in-out'}}></ManageSearchIcon>
+        </div>
+        <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen}></SearchMenu>
+      <header className="app-wrapper">
         <div className='wrapper'>
           <FileField onUpload={onUpload}/>
           <ReactP5Wrapper sketch={CircleContainer} toPlay = {toPlay} aNode={analyserNode} NUM = {NUM}/>  

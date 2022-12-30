@@ -19,7 +19,7 @@
   }
 }
 
-.App-header {
+.app-wrapper {
   margin: auto;
   min-height: 100vh;
   display: flex;
@@ -108,6 +108,9 @@
   color:aqua;
 }
 
+.pause-play-icon:hover {
+  cursor: pointer;
+}
 .slider-container {
   position: relative;
   top: -1.5rem;
@@ -175,6 +178,108 @@
   background: rgba(148, 93, 94, 0.95);
 }
 
+.search-bar{
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  height: fit-content;
+  z-index: 1000;
+  padding-top: 10px;
+}
+
+.search-menu {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  transition: all 0.3s ease-in-out;
+  background-color: #DDA77B;
+  height: 100vh;
+}
+
+.search-wrapper{
+  width: 80%;
+  max-width: 1600px;
+  height: 100%;
+  margin: auto;
+  padding-top: 50px;
+  box-sizing: border-box;
+}
+
+.search-wrapper > p{
+  color: #37123C;
+  font-size: 20px;
+  width: 100%;
+}
+
+.search-menu.hide{
+  top: -100%;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.search-menu.show{
+  top: 0px;
+}
+
+.cloud-upload-icon {
+  color: #37123C;
+}
+
+.search-menu-icon:hover, .cloud-upload-icon:hover {
+  cursor:pointer;
+}
+
+.cloud-upload-icon:active {
+  transform: scale(0.9);
+}
+
+.song-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.song-item{
+  width: 200px;
+  height: 300px;
+  border: solid 1px #37123C;
+  border-radius: 3%;
+  color: #37123C;
+}
+
+.song-item > p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 90%;
+  margin: 1em auto 1em auto;
+}
+
+.song-item-icon {
+  padding: 50px 0 50px 0;
+}
+
+.song-item-action-icon {
+  /* box-sizing: border-box; */
+  padding: 0 20px 0 20px;
+  margin: 0 10px 0 10px;
+  border: solid 1px #37123C;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+  background-color: #DDA77B;
+}
+
+.song-item-action-icon:hover {
+  cursor: pointer;
+}
+
+.song-item-action-icon:active {
+  transform: scale(0.9);
+  background-color: #37123C;
+  color: #DDA77B;
+}
+
 @media screen and (max-width: 600px) {
   .circle{
     width: 150px;
@@ -183,5 +288,13 @@
 
   .upload-icon {
     top: 47.5px;
+  }
+
+  .search-wrapper > p {
+    font-size: 14px;
+  }
+  .song-item{
+    width: 120px;
+    height: 180px;
   }
 }

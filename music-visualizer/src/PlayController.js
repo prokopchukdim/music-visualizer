@@ -10,7 +10,7 @@ export default function PlayController(props) {
     const SIZE = 50;
 
     return (
-    <div onClick={onClick} >
+    <div onClick={onClick} className='pause-play-icon'>
         {props.toPlay ? <PauseCircleIcon sx={{ fontSize: SIZE }}/> : <PlayCircleIcon sx={{ fontSize: SIZE }}/>}
     </div>     
    );

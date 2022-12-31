@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -79,6 +80,7 @@ public class FileUploadController {
     }
 
     @DeleteMapping("deleteFile/")
+    @ResponseBody
     public ResponseEntity<String> deleteFile(String filename) {
         try {
             storageService.delete(filename);

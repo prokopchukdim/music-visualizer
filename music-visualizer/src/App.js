@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import CircleContainer from './CircleContainer';
 import { ReactP5Wrapper } from 'react-p5-wrapper';
 import FileField from './FileField';
@@ -7,10 +8,7 @@ import React, { useEffect } from 'react';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import SearchMenu from './SearchMenu';
 
-
-
 function App() {
-
   const [soundFileURL, setSoundFileURL] = React.useState(process.env.PUBLIC_URL + "test.mp3");
   const [toPlay, setToPlay] = React.useState(false);
   const [audio] = React.useState(new Audio());
@@ -19,7 +17,14 @@ function App() {
   const [timeVal, setTimeVal] = React.useState(audio.currentTime);
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [searchIconSize, setsearchIconSize] = React.useState(window.innerWidth <= 600 ? 30 : 45);
+  const [songs, setSongs] = React.useState([]);
 
+  const updateSongsFromServer = () => {
+    axios.get("http://127.0.0.1:8080/getMusicFiles/").then(res => {
+      setSongs(res.data);
+    });
+  }
+ 
   const handleResize = () => {
     if (window.innerWidth <= 600) {
       setsearchIconSize(30);
@@ -29,9 +34,9 @@ function App() {
     }
 }
 
-  const onUpload = (files) => {
+  const onUpload = (file) => {
     console.log("A file was uploaded");
-    setSoundFileURL(URL.createObjectURL(files[0]));
+    setSoundFileURL(URL.createObjectURL(file));
   };
 
   const handleAudioEnded = () => {
@@ -68,6 +73,10 @@ function App() {
     };
   });
 
+  useEffect( () => {
+    updateSongsFromServer();
+  }, []);
+
   audio.addEventListener('timeupdate', (e) => {
     setTimeVal(audio.currentTime);
   });
@@ -86,7 +95,7 @@ function App() {
       <div className='search-bar'>
           <ManageSearchIcon className = 'search-menu-icon' onClick = {handleSearchClick} sx = {{fontSize:searchIconSize}} style = {{color: searchOpen ? '#37123C' : '#DDA77B', transition: 'all 0.3s ease-in-out'}}></ManageSearchIcon>
         </div>
-        <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen}></SearchMenu>
+        <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen} songs = {songs} onUpload={onUpload} updateSongsFromServer={updateSongsFromServer}></SearchMenu>
       <header className="app-wrapper">
         <div className='wrapper'>
           <FileField onUpload={onUpload}/>

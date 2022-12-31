@@ -51,7 +51,7 @@ export default function FileField({onUpload}) {
         const {files} = e.dataTransfer;
         if (files && files.length) {
             setUploaded(true);
-            onUpload(files);
+            onUpload(files[0]);
         }
     };
 

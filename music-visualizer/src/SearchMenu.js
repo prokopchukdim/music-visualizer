@@ -1,12 +1,9 @@
 import React from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import SongItem from './SongItem'
+import SongItem from './SongItem';
 
-export default function SearchMenu({searchOpen, iconSize}){
-
-    
-    let songNames = ['song 1.mp3', 'song 2.wav', 'song 3.mp3', 'Never gonna give you up.mp3'];
-    let songNum = songNames.length;
+export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updateSongsFromServer}){
+    let songNum = songs.length;
     return (
         <div className = {searchOpen ? "search-menu show" : "search-menu hide"}>
             <div className='search-wrapper'>
@@ -14,8 +11,8 @@ export default function SearchMenu({searchOpen, iconSize}){
                 <CloudUploadIcon className = "cloud-upload-icon" sx = {{fontSize: iconSize}} style = {{transition: 'transform 0.1s ease-in-out'}}></CloudUploadIcon>
                 <p>{songNum} available songs:</p>
                 <div className='song-container'>
-                    {songNames.map( (song) => {
-                        return <SongItem key={song} name={song}></SongItem>;
+                    {songs.map( (song) => {
+                        return <SongItem key={song} name={song} onUpload = {onUpload} updateSongsFromServer={updateSongsFromServer}></SongItem>;
                     })}
                 </div>
             </div>

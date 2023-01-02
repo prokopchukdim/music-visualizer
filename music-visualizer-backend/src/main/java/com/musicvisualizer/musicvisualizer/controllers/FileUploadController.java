@@ -2,6 +2,7 @@ package com.musicvisualizer.musicvisualizer.controllers;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -71,11 +72,18 @@ public class FileUploadController {
     }
 
     @PostMapping("uploadFile/")
-    public ResponseEntity<String> uploadFile(MultipartFile file) {
+    public ResponseEntity<String> uploadFile(MultipartFile file, String name) {
+        log.info("Uploaded file {}", name);
         if (storageService.loadAll().count() >= 10) {
             return ResponseEntity.badRequest().body("Error: The max number of uploaded files has been reached");
         }
-        storageService.store(file);
+        try {
+            storageService.store(file, name);
+        } catch (Exception e) {
+            log.error("Failed file upload {}", e);
+            return ResponseEntity.badRequest().body("Error: Failed to upload file");
+        }
+
         return ResponseEntity.ok().body(file.getOriginalFilename() + " has been uploaded");
     }
 

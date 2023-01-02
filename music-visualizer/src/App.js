@@ -10,6 +10,7 @@ import SearchMenu from './SearchMenu';
 
 function App() {
   const [soundFileURL, setSoundFileURL] = React.useState(process.env.PUBLIC_URL + "test.mp3");
+  const [soundFile, setSoundFile] = React.useState('');
   const [toPlay, setToPlay] = React.useState(false);
   const [audio] = React.useState(new Audio());
   const [analyserNode, setAnalyserNode] = React.useState(null);
@@ -37,6 +38,7 @@ function App() {
   const onUpload = (file) => {
     console.log("A file was uploaded");
     setSoundFileURL(URL.createObjectURL(file));
+    setSoundFile(file);
   };
 
   const handleAudioEnded = () => {
@@ -75,6 +77,7 @@ function App() {
 
   useEffect( () => {
     updateSongsFromServer();
+
   }, []);
 
   audio.addEventListener('timeupdate', (e) => {
@@ -95,7 +98,7 @@ function App() {
       <div className='search-bar'>
           <ManageSearchIcon className = 'search-menu-icon' onClick = {handleSearchClick} sx = {{fontSize:searchIconSize}} style = {{color: searchOpen ? '#37123C' : '#DDA77B', transition: 'all 0.3s ease-in-out'}}></ManageSearchIcon>
         </div>
-        <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen} songs = {songs} onUpload={onUpload} updateSongsFromServer={updateSongsFromServer}></SearchMenu>
+        <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen} songs = {songs} onUpload={onUpload} updateSongsFromServer={updateSongsFromServer} soundFile={soundFile}></SearchMenu>
       <header className="app-wrapper">
         <div className='wrapper'>
           <FileField onUpload={onUpload}/>

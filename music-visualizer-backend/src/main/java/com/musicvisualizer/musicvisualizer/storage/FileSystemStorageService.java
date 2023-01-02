@@ -28,14 +28,20 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	@Override
-	public void store(MultipartFile file) {
+	public void store(MultipartFile file, String name) {
 		try {
 			if (file.isEmpty()) {
-				throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+				throw new StorageException("Failed to store empty file " + name);
 			}
-			Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+			// Overwrite existing file
+			Path filePath = this.rootLocation.resolve(name);
+			Resource resource = new UrlResource(filePath.toUri());
+			if (resource.exists() || resource.isReadable()) {
+				FileSystemUtils.deleteRecursively(filePath);
+			}
+			Files.copy(file.getInputStream(), filePath);
 		} catch (IOException e) {
-			throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+			throw new StorageException("Failed to store file " + name, e);
 		}
 	}
 

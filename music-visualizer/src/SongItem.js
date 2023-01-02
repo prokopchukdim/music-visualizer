@@ -14,6 +14,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer}){
             method: 'GET',
             responseType: 'blob'
         }).then( res => {
+            res.data.name = name;
             onUpload(res.data);
         });
     }

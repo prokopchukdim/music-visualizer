@@ -2,8 +2,11 @@ import React from 'react';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import SongItem from './SongItem';
 import axios from 'axios';
+import useError from './useError';
 
 export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updateSongsFromServer, soundFile}){
+    const {addError} = useError(2000);
+    
     const uploadFile = () => {
         let formData = new FormData();
         formData.append("file", soundFile);
@@ -17,8 +20,19 @@ export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updat
                 "Content-Type": "multipart/form-data",
             }
         }).then( res => {
-            console.log(`File ${soundFile.name} uploaded to server`);
+            let msg = {
+                data: `File ${soundFile.name} uploaded`,
+                type: 'info'
+            };
+            addError(msg);
             updateSongsFromServer();
+        }).catch( res => {
+            console.log(res);
+            let msg = {
+                data: `Error uploading: ${res.message}`,
+                type: 'error'
+            };
+            addError(msg);
         });
     }
 

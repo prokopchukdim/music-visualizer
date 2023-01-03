@@ -7,6 +7,8 @@ import PlayController from './PlayController';
 import React, { useEffect } from 'react';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import SearchMenu from './SearchMenu';
+import {ErrorContextProvider} from './ErrorHandler';
+import ErrorOverlay from './ErrorOverlay';
 
 function App() {
   const [soundFileURL, setSoundFileURL] = React.useState(process.env.PUBLIC_URL + "test.mp3");
@@ -94,23 +96,26 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div className='search-bar'>
-          <ManageSearchIcon className = 'search-menu-icon' onClick = {handleSearchClick} sx = {{fontSize:searchIconSize}} style = {{color: searchOpen ? '#37123C' : '#DDA77B', transition: 'all 0.3s ease-in-out'}}></ManageSearchIcon>
+    <ErrorContextProvider>
+      <div className="App">
+        <ErrorOverlay></ErrorOverlay>
+        <div className='search-bar'>
+            <ManageSearchIcon className = 'search-menu-icon' onClick = {handleSearchClick} sx = {{fontSize:searchIconSize}} style = {{color: searchOpen ? '#37123C' : '#DDA77B', transition: 'all 0.3s ease-in-out'}}></ManageSearchIcon>
         </div>
         <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen} songs = {songs} onUpload={onUpload} updateSongsFromServer={updateSongsFromServer} soundFile={soundFile}></SearchMenu>
-      <header className="app-wrapper">
-        <div className='wrapper'>
-          <FileField onUpload={onUpload}/>
-          <ReactP5Wrapper sketch={CircleContainer} toPlay = {toPlay} aNode={analyserNode} NUM = {NUM}/>  
-        </div>
-        <div className = "slider-container">
-          <input type = "range" className = "slider" min="0" max={ isNaN(audio.duration) ? 0 : audio.duration * 1000} value = {timeVal * 1000} onChange={(e) => changeTime(e.target.value / 1000)}/>
-        </div>
-        {/* <div className='range'></div> */}
-        <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay}></PlayController>
-      </header>
-    </div>
+        <header className="app-wrapper">
+          <div className='wrapper'>
+            <FileField onUpload={onUpload}/>
+            <ReactP5Wrapper sketch={CircleContainer} toPlay = {toPlay} aNode={analyserNode} NUM = {NUM}/>  
+          </div>
+          <div className = "slider-container">
+            <input type = "range" className = "slider" min="0" max={ isNaN(audio.duration) ? 0 : audio.duration * 1000} value = {timeVal * 1000} onChange={(e) => changeTime(e.target.value / 1000)}/>
+          </div>
+          {/* <div className='range'></div> */}
+          <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay}></PlayController>
+        </header>
+      </div>
+    </ErrorContextProvider>
   );
 }
 

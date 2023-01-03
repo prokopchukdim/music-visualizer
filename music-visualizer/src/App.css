@@ -280,6 +280,27 @@
   color: #DDA77B;
 }
 
+.error-overlay {
+  z-index: 1001;
+  margin-bottom: 100px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.alert {
+  width: 60%;
+  margin: 0 auto 10px auto;
+  padding: 8px 0 8px 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 15px;
+}
+
+.error {
+  color: rgb(173, 25, 25);
+}
+
 @media screen and (max-width: 600px) {
   .circle{
     width: 150px;

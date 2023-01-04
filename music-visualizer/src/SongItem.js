@@ -3,7 +3,6 @@ import MusicNote from '@mui/icons-material/MusicNote';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import App from './App';
 import useError from './useError';
 
 export default function SongItem({name, onUpload, updateSongsFromServer, iconSize}){

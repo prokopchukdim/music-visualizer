@@ -6,6 +6,7 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
   z-index: -100;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -193,7 +194,8 @@
   z-index: 100;
   transition: all 0.3s ease-in-out;
   background-color: #DDA77B;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 .search-wrapper{
@@ -202,6 +204,7 @@
   height: 100%;
   margin: auto;
   padding-top: 50px;
+  padding-bottom: 50px;
   box-sizing: border-box;
 }
 
@@ -214,6 +217,8 @@
 .search-menu.hide{
   top: -100%;
   background-color: rgba(0, 0, 0, 0);
+  height: 25vh;
+  overflow: hidden;
 }
 
 .search-menu.show{
@@ -328,4 +333,10 @@
   .song-item-action-icon {
     padding: 0 30px 0 30px;
   }
+}
+
+@media screen and (max-height: 960px) and (min-width: 600px) {
+  .slider-container{
+    margin-top: 0;
+  } 
 }

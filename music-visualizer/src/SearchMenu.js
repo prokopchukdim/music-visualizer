@@ -45,7 +45,7 @@ export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updat
                 <p>{songNum} available songs:</p>
                 <div className='song-container'>
                     {songs.map( (song) => {
-                        return <SongItem key={song} name={song} onUpload = {onUpload} updateSongsFromServer={updateSongsFromServer}></SongItem>;
+                        return <SongItem key={song} name={song} iconSize={iconSize} onUpload = {onUpload} updateSongsFromServer={updateSongsFromServer}></SongItem>;
                     })}
                 </div>
             </div>

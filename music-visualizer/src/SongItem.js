@@ -6,8 +6,8 @@ import axios from 'axios';
 import App from './App';
 import useError from './useError';
 
-export default function SongItem({name, onUpload, updateSongsFromServer}){
-    let iconSize = 100;
+export default function SongItem({name, onUpload, updateSongsFromServer, iconSize}){
+    // let iconSize = 100;
     const {addError} = useError(2000);
 
     const getFile = () => {
@@ -55,7 +55,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer}){
 
     return (
         <div className='song-item'>
-            <MusicNote className='song-item-icon' sx = {{fontSize:iconSize}}></MusicNote>
+            <MusicNote className='song-item-icon' sx = {{fontSize: iconSize * 2.2}}></MusicNote>
             <p>{name}</p>
             <DownloadIcon onClick={getFile} className='song-item-action-icon' style = {{transition: 'all 0.1s ease-in-out'}}></DownloadIcon>
             <DeleteIcon onClick = {deleteFile} className='song-item-action-icon' style = {{transition: 'all 0.1s ease-in-out'}}></DeleteIcon>

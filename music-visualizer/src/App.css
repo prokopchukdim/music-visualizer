@@ -261,7 +261,6 @@
 }
 
 .song-item-action-icon {
-  /* box-sizing: border-box; */
   padding: 0 20px 0 20px;
   margin: 0 10px 0 10px;
   border: solid 1px #37123C;
@@ -317,5 +316,16 @@
   .song-item{
     width: 120px;
     height: 180px;
+  }
+  .song-item-icon {
+    padding: 10px 0 0 0;
+  }
+  .song-item > p {
+    font-size: 12px;
+    margin: 0 auto 1em auto;
+  }
+
+  .song-item-action-icon {
+    padding: 0 30px 0 30px;
   }
 }

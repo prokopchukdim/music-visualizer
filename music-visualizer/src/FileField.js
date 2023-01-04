@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import UploadIcon from '@mui/icons-material/Upload';
 import MusicNote from '@mui/icons-material/MusicNote';
 
-export default function FileField({onUpload}) {
+export default function FileField({onUpload, isUploaded, setUploaded}) {
     const drop = React.useRef(null);
-    const [isUploaded, setUploaded] = React.useState(false);
+    // const [isUploaded, setUploaded] = React.useState(false);
     const [isDragedOver, setDragedOver] = React.useState(false);
     const [iconSize, setIconSize] = React.useState(window.innerWidth <= 600 ? 45 : 90);
 

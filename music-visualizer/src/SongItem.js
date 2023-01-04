@@ -24,7 +24,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer, iconSiz
             addError(msg);
         }).catch( res => {
             let msg = {
-                data: `Error downloading: ${res.message}`,
+                data: `Error downloading: Status ${res.response.status} (${res.response.data})`,
                 type: 'error'
             };
             addError(msg);
@@ -45,7 +45,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer, iconSiz
             addError(msg);
         }).catch( res => {
             let msg = {
-                data: `Error deleting: ${res.message}`,
+                data: `Error deleting: Status ${res.response.status} (${res.response.data})`,
                 type: 'error'
             };
             addError(msg);

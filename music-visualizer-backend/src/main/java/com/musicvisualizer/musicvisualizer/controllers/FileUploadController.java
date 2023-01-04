@@ -6,6 +6,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class FileUploadController {
 
     private final StorageService storageService;
     private final StorageProperties storageProperties;
+
+    private final String[] undeletableFiles = { "Elevator Music.mp3", "Sweep Frequency.wav", "Test Tune.mp3" };
 
     @Autowired
     public FileUploadController(StorageService storageService, StorageProperties storageProperties) {
@@ -68,7 +71,6 @@ public class FileUploadController {
             log.error("Could not get file {}", filename, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @PostMapping("uploadFile/")
@@ -90,6 +92,11 @@ public class FileUploadController {
     @DeleteMapping("deleteFile/")
     @ResponseBody
     public ResponseEntity<String> deleteFile(String filename) {
+        if (Arrays.asList(undeletableFiles).contains(filename)) {
+            log.error("Denied delete request for {}, undeletable file", filename);
+            return ResponseEntity.badRequest().body("Couldn't delete, file labled undeletable on server");
+        }
+
         try {
             storageService.delete(filename);
         } catch (Exception e) {

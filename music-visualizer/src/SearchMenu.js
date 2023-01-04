@@ -29,7 +29,7 @@ export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updat
         }).catch( res => {
             console.log(res);
             let msg = {
-                data: `Error uploading: ${res.message}`,
+                data: `Error uploading: Status ${res.response.status} (${res.response.data})`,
                 type: 'error'
             };
             addError(msg);

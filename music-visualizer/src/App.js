@@ -11,8 +11,9 @@ import {ErrorContextProvider} from './ErrorHandler';
 import ErrorOverlay from './ErrorOverlay';
 
 function App() {
-  const [soundFileURL, setSoundFileURL] = React.useState(process.env.PUBLIC_URL + "test.mp3");
+  const [soundFileURL, setSoundFileURL] = React.useState('');//React.useState(process.env.PUBLIC_URL + "test.mp3");
   const [soundFile, setSoundFile] = React.useState('');
+  const [isUploaded, setUploaded] = React.useState(false);
   const [toPlay, setToPlay] = React.useState(false);
   const [audio] = React.useState(new Audio());
   const [analyserNode, setAnalyserNode] = React.useState(null);
@@ -38,9 +39,11 @@ function App() {
 }
 
   const onUpload = (file) => {
-    console.log("A file was uploaded");
+    // console.log("A file was uploaded");
+    setUploaded(true);
     setSoundFileURL(URL.createObjectURL(file));
     setSoundFile(file);
+    setToPlay(false);
   };
 
   const handleAudioEnded = () => {
@@ -48,6 +51,9 @@ function App() {
   };
 
   const customSetToPlay = () => {
+    if (soundFileURL === ''){
+      return null;
+    }
     if (!analyserNode){
       audio.addEventListener("ended", handleAudioEnded);
 
@@ -105,14 +111,14 @@ function App() {
         <SearchMenu iconSize = {searchIconSize} searchOpen = {searchOpen} songs = {songs} onUpload={onUpload} updateSongsFromServer={updateSongsFromServer} soundFile={soundFile}></SearchMenu>
         <header className="app-wrapper">
           <div className='wrapper'>
-            <FileField onUpload={onUpload}/>
+            <FileField onUpload={onUpload} isUploaded={isUploaded} setUploaded={setUploaded}/>
             <ReactP5Wrapper sketch={CircleContainer} toPlay = {toPlay} aNode={analyserNode} NUM = {NUM}/>  
           </div>
           <div className = "slider-container">
             <input type = "range" className = "slider" min="0" max={ isNaN(audio.duration) ? 0 : audio.duration * 1000} value = {timeVal * 1000} onChange={(e) => changeTime(e.target.value / 1000)}/>
           </div>
           {/* <div className='range'></div> */}
-          <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay}></PlayController>
+          <PlayController toPlay = {toPlay} togglePlay = {customSetToPlay} isUploaded = {isUploaded}></PlayController>
         </header>
       </div>
     </ErrorContextProvider>

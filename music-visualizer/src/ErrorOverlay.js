@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import useError from './useError';
 
 export default function ErrorOverlay(){

@@ -11,7 +11,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer, iconSiz
 
     const getFile = () => {
         axios({
-            url: "http://127.0.0.1:8080/getFile/?filename=" + name,
+            url: process.env.REACT_APP_API_ROOT + "getFile/?filename=" + name,
             method: 'GET',
             responseType: 'blob'
         }).then( res => {
@@ -33,7 +33,7 @@ export default function SongItem({name, onUpload, updateSongsFromServer, iconSiz
 
     const deleteFile = () => {
         axios({
-            url: "http://127.0.0.1:8080/deleteFile/?filename=" + name,
+            url: process.env.REACT_APP_API_ROOT + "deleteFile/?filename=" + name,
             method: 'DELETE'
         }).then( res => {
             let msg = {

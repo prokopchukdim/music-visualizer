@@ -13,7 +13,7 @@ export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updat
         formData.append("name", soundFile.name);
 
         axios({
-            url: "http://127.0.0.1:8080/uploadFile/",
+            url: process.env.REACT_APP_API_ROOT +"uploadFile/",
             method: 'POST',
             data: formData,
             headers:{

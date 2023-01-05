@@ -24,7 +24,7 @@ function App() {
   const [songs, setSongs] = React.useState([]);
 
   const updateSongsFromServer = () => {
-    axios.get("http://127.0.0.1:8080/getMusicFiles/").then(res => {
+    axios.get(process.env.REACT_APP_API_ROOT + "getMusicFiles/").then(res => {
       setSongs(res.data);
     });
   }

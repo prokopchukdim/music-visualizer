@@ -40,7 +40,7 @@ export default function SearchMenu({searchOpen, iconSize, songs, onUpload, updat
     return (
         <div className = {searchOpen ? "search-menu show" : "search-menu hide"}>
             <div className='search-wrapper'>
-                <p>Upload current song to song repository:</p>
+                <p>Upload '{soundFile.name}' to song repository:</p>
                 <CloudUploadIcon onClick={uploadFile} className = "cloud-upload-icon" sx = {{fontSize: iconSize}} style = {{transition: 'transform 0.1s ease-in-out'}}></CloudUploadIcon>
                 <p>{songNum} available songs:</p>
                 <div className='song-container'>

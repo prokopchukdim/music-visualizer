@@ -47,7 +47,7 @@ public class FileUploadController {
         if (!Files.isDirectory(Paths.get(storageProperties.getLocation()))) {
             storageService.init();
         }
-        return ResponseEntity.ok().body("test");
+        return ResponseEntity.ok().body("Backend running");
     }
 
     @GetMapping("getMusicFiles/")
@@ -63,6 +63,7 @@ public class FileUploadController {
 
     @GetMapping("getFile/")
     public ResponseEntity<Resource> getFile(String filename) {
+        log.info("User requested file: {}", filename);
         Resource file;
         try {
             file = storageService.loadAsResource(filename);
@@ -76,6 +77,11 @@ public class FileUploadController {
     @PostMapping("uploadFile/")
     public ResponseEntity<String> uploadFile(MultipartFile file, String name) {
         log.info("Uploaded file {}", name);
+        if (Arrays.asList(undeletableFiles).contains(name)) {
+            log.error("Denied overwrite request for {}, protected resource", name);
+            return ResponseEntity.badRequest().body("Couldn't overwrite, file protected on server");
+        }
+
         if (storageService.loadAll().count() >= 10) {
             return ResponseEntity.badRequest().body("Error: The max number of uploaded files has been reached");
         }
@@ -93,7 +99,7 @@ public class FileUploadController {
     @ResponseBody
     public ResponseEntity<String> deleteFile(String filename) {
         if (Arrays.asList(undeletableFiles).contains(filename)) {
-            log.error("Denied delete request for {}, undeletable file", filename);
+            log.error("Denied delete request for {}, protected resource", filename);
             return ResponseEntity.badRequest().body("Couldn't delete, file labled undeletable on server");
         }
 

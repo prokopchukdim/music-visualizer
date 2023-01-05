@@ -1,6 +1,6 @@
 # music-visualizer
 
-A web app that can visualize music files. Created as a personal learning project. Created using Java, Springboot, React.js, p5.js, Docker, Azure, and Netlify.
+A web app that can visualize music files. Created as a personal learning project using Java, Springboot, React.js, p5.js, Docker, Azure, and Netlify.
 
 The front-end is hosted on Netlify: https://chic-travesseiro-7b7f19.netlify.app/
 

@@ -4,3 +4,5 @@ A web app that can visualize music files. Created as a personal learning project
 
 The front-end is hosted here: https://chic-travesseiro-7b7f19.netlify.app/
 The back-end is a Dockerized Springboot REST API hosted on Azure App Services. 
+
+![image](https://user-images.githubusercontent.com/87666671/210891764-8083fbc7-1401-4ac3-a454-c9dcc7f11da9.png)

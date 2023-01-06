@@ -6,7 +6,7 @@ Supports drag-and-drop for your own music files. Can also upload your files to t
 
 The front-end is hosted on Netlify: https://chic-travesseiro-7b7f19.netlify.app/
 
-The back-end is a Dockerized Springboot REST API hosted on Azure App Services. 
+The back-end is a Dockerized Springboot REST API hosted on Azure App Services. You can check if it's up by going here: https://music-visualizer.azurewebsites.net/
 
 It's also available as a docker image on Docker Hub https://hub.docker.com/repository/docker/prokopchukdim/music-visualizer
 
